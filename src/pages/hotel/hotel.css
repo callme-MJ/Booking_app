@@ -94,3 +94,40 @@
     cursor: pointer;
     border-radius: 5px;
 }
+.slider{
+    width: 100vw;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.426);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+} 
+.slideWrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sliderImg{
+    width: 80%;
+    height: 80vh;
+}
+.close{
+    position: absolute;
+    color: lightgrey;
+    cursor: pointer;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+}
+.arrow{
+    margin: 20px;
+    font-size: 30px;
+    color: lightgrey;
+    cursor: pointer;
+    
+}

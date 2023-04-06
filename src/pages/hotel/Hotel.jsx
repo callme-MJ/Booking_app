@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import "./hotel.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import MailList from "../../components/mailList/MailList";
 import Footer from "../../components/footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const Hotel = ()=>{
+
+  const [slideNumber, setSlideNumber] = useState(0);
+  const [openSlide, setOpenSlide] = useState(false);
+
+  const handleOpen = (i)=>{
+    setOpenSlide(true);
+    setSlideNumber(i);
+  }
+
+  const handleMove = (direction)=>{
+
+    let newSlideNumber;
+    if(direction === "l"){
+      newSlideNumber = slideNumber === 0 ? photos.length - 1 : slideNumber - 1;
+    }else{
+      newSlideNumber = slideNumber === photos.length - 1 ? 0 : slideNumber + 1;
+    }
+    setSlideNumber(newSlideNumber);
+  }
 
     const photos = [
         {
@@ -34,6 +53,15 @@ const Hotel = ()=>{
             <Navbar/>
             <Header type="list"/>
             <div className="hotelContainer">
+              { openSlide && <div className="slider">
+                <FontAwesomeIcon onClick={()=>{setOpenSlide(false)}} icon={faCircleXmark} className="close"/>
+                <FontAwesomeIcon onClick={()=>handleMove("l")} icon={faCircleArrowLeft} className="arrow"/>
+                <div className="slideWrapper">
+                  <img src={photos[slideNumber].src} alt="slides" className="sliderImg"/>
+                </div>
+                <FontAwesomeIcon onClick={()=>handleMove('r')} icon={faCircleArrowRight} className="arrow"/>
+
+              </div>}
                 <div className="hotelWrapper">
                     <button className="bookNow">Book Now!</button>
                     <h1 className="hotelTitle">Grand Hotel</h1>
@@ -44,9 +72,9 @@ const Hotel = ()=>{
                         <span className="hotelDistance">Excellent location - 500m from Center</span>
                         <span className="hotelPriceHighlight">Book a stay over $141 at this property and get a free airport taxi..</span>
                         <div className="hotelImages">
-                            {photos.map(photo=>(
+                            {photos.map((photo,index)=>(
                                 <div className="hotelImgWrapper">
-                                    <img src={photo.src} alt="hotel" className="hotelImg"/>
+                                    <img onClick={()=>handleOpen(index)} src={photo.src} alt="hotel" className="hotelImg"/>
                                 </div>
                             ))}
                         </div>
