@@ -1,30 +1,34 @@
 import React from "react";
 import "./searchItem.css"
+import { Link } from "react-router-dom";
 
-const SearchItem =()=>{
+const SearchItem =({item})=>{
     return(
         <div className="searchItems">
-            <img src=""
+            <img src={item.photos[0]}
             alt="hotel"
             className="siImg"/>
             <div className="siDesc">
-                <h1 className="siTitle">Arcade Rooms</h1>
-                <span className="siDistance">500m</span>
+                <h1 className="siTitle">{item.name}</h1>
+                <span className="siDistance">{item.distance}</span>
                 <span className="siTaxiOp">Free Taxi</span>
                 <span className="siSubtitle">Studiio with Air Condition</span>
-                <span className="siFeatures">Entire Studio * 1 bathroom * 21m 1full bed</span>
+                <span className="siFeatures">{item.desc}</span>
                 <span className="siCancelOp">Free Cancellation</span>
                 <span className="siCancelOpSubtitle">You can cancel later, So lock in this great price today</span>
             </div>
             <div className="siDetails">
+                {item.rating && 
                 <div className="siRating">
                     <span>Excellent</span>
-                    <button>8.9</button>
-                </div>
+                    <button>{item.reating}</button>
+                </div>}
                 <div className="siDetailsTexts">
-                    <span className="siPrice">123$</span>
+                    <span className="siPrice">{item.cheapestPrice}$</span>
                     <span className="siTaxOp">Icluded of Taxes and fees</span>
+                    <Link to={`/hotels/${item._id}`}>
                     <button className="siCheckButton">See availability</button>
+                    </Link>
                 </div>
             </div>
         </div>
