@@ -7,26 +7,31 @@ import Footer from "../../components/footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import useFetch from "../../hooks/useFetch";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
+import { AuthContext } from "../../context/AuthContext";
+import Reserve from "../../components/reserve/Reserve";
 
 const Hotel = ()=>{
   const location = useLocation()
   const id = location.pathname.split("/")[2]
   const [slideNumber, setSlideNumber] = useState(0);
   const [openSlide, setOpenSlide] = useState(false);
+  const [openModal, setOpenModal] = useState(false)
 
   const {data, loading, error}= useFetch(`/hotels/find/${id}`)
 
   const {date, options} = useContext(SearchContext)
+  const {user}= useContext(AuthContext);
+  const navigate = useNavigate();
 
   const MILLISECONDS_PER_DAY = 1000*60*60*24;
   function dayDifference (date1,date2){
-    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const timeDiff = Math.abs(date2?.getTime() - date1?.getTime());
     const diffDays = Math.ceil(timeDiff/MILLISECONDS_PER_DAY);
     return diffDays;
   }
-  const days = (dayDifference(date[0].endDate,date[0].startDate));
+  const days = (dayDifference(date[0]?.endDate,date[0]?.startDate));
   const handleOpen = (i)=>{
     setOpenSlide(true);
     setSlideNumber(i);
@@ -43,6 +48,13 @@ const Hotel = ()=>{
     setSlideNumber(newSlideNumber);
   }
 
+  const handleClick=()=>{
+    if(user){
+      setOpenModal(true)
+    }else{
+      navigate("/login")
+    }
+  }
     
     return(
         <div>
@@ -86,7 +98,7 @@ const Hotel = ()=>{
                                 <h1>Perfect for a {days} night stay</h1>
                                 <span>located in the real heart of karkow, this property has an excellent location score of 9.9</span>
                                 <h2><b>${days * data.cheapestPrice * options.room}</b>({days} nights)</h2>
-                                <button className="hotelDetailsBtn">Book Now!</button>
+                                <button className="hotelDetailsBtn" onClick={handleClick}>Book Now!</button>
                             </div>
                         </div>
                 </div>
@@ -94,6 +106,7 @@ const Hotel = ()=>{
                 <Footer/>
             </div>
             )}
+            {openModal &&<Reserve setOpen={setOpenModal} hotelId={id}/>}
         </div>
 
         

@@ -12,6 +12,7 @@ function App() {
       <Route path="/hotels/:id" element={<Hotel/>}/>
       <Route path="/login" element={<Login/>}/>
 
+
     </Routes>
     </BrowserRouter>
   );

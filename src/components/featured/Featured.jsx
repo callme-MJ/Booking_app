@@ -5,7 +5,6 @@ import React from 'react';
 const Featured = () => {
 
     const { data, loading, error } = useFetch("/hotels/countByCity?cities=aleppey,cochi,calicut")
-    console.log(data);
     return(
 
     <div className="featured">

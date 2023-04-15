@@ -4,7 +4,6 @@ import useFetch from "../../hooks/useFetch";
 
 const PropertyList = () => {
     const {data, loading, error} = useFetch("/hotels/countByType");
-    console.log(data);
     const images =[
         "https://media-cdn.tripadvisor.com/media/photo-s/1e/dc/6b/96/chambre-d-hotes-le-49.jpg",
         "https://media-cdn.tripadvisor.com/media/photo-s/1c/75/8c/01/maison-d-hotes-chamade.jpg",
